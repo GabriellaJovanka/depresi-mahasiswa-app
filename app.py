@@ -37,17 +37,20 @@ with st.form("main_form"):
         financial_stress = st.slider("Financial Stress (1-5)", 1, 5, 3)
         family_history = st.selectbox("Family History of Mental Illness", ["Yes", "No"])
 
-    st.markdown("---")
-
-    # 1. CSS untuk menyembunyikan tombol asli & mempercantik tombol merah
-    st.markdown("""
+  # 1. CSS untuk menyembunyikan tombol asli & mempercantik tombol merah
+    st.markdown
+    ("""
         <style>
+            /* Menghilangkan tombol bawaan Streamlit secara total */
             div[data-testid="stForm"] button[kind="primaryFormSubmit"] {
                 display: none !important;
             }
+            
+            //Gaya tombol merah kustom 
             .my-red-button {
+                display: block !important;
                 background-color: #FF4A4A;
-                color: white;
+                color: white !important;
                 border-radius: 25px;
                 border: none;
                 padding: 15px;
@@ -56,7 +59,8 @@ with st.form("main_form"):
                 width: 100%;
                 cursor: pointer;
                 text-align: center;
-                margin-bottom: 10px;
+                box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+                transition: background-color 0.3s ease;
             }
             .my-red-button:hover {
                 background-color: #E63939;
@@ -64,23 +68,11 @@ with st.form("main_form"):
         </style>
     """, unsafe_allow_html=True)
 
-    # 2. Tombol Merah Kustom
-    st.markdown('<button class="my-red-button" onclick="clickRealButton()">🔍 Prediksi Sekarang</button>', unsafe_allow_html=True)
+    # 2. Render Tombol Merah Kustom
+    # Tombol ini akan memicu klik pada tombol asli secara otomatis
+    st.markdown('<button class="my-red-button" type="button" onclick="window.parent.document.querySelector(\'button[kind=primaryFormSubmit]\').click()">🔍 Prediksi Sekarang</button>', unsafe_allow_html=True)
 
-    # 3. Javascript untuk memicu klik pada tombol asli
-    st.components.v1.html("""
-        <script>
-            function clickRealButton() {
-                var buttons = window.parent.document.querySelectorAll('button[kind="primaryFormSubmit"]');
-                if (buttons.length > 0) {
-                    buttons[buttons.length - 1].click();
-                }
-            }
-            window.clickRealButton = clickRealButton;
-        </script>
-    """, height=0)
-
-    # 4. Tombol asli (disembunyikan oleh CSS di atas)
+    # 3. Tombol asli (Wajib ada di dalam form agar 'submitted' bekerja, tapi disembunyikan oleh CSS)
     submitted = st.form_submit_button("Analisis Sekarang")
 
 # --- PROSES PREDIKSI ---
