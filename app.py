@@ -14,6 +14,82 @@ model_pipeline = load_model()
 st.set_page_config(page_title="Prediksi Depresi Mahasiswa", layout="wide")
 st.title("🎓 Aplikasi Prediksi Tingkat Depresi Mahasiswa")
 
+# --- CUSTOM CSS ---
+st.markdown("""
+    <style>
+        /* Background Utama */
+        .stApp {
+            background-color: #EFD2B0; 
+        }
+
+        /* Warna Teks Judul Halaman */
+        .stApp h1, .stApp h2 {
+            color: #355872 !important;
+        }
+
+        /* Styling Form */
+        div[data-testid="stForm"] {
+            background-color: #355872;
+            padding: 30px;
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0px 10px 25px rgba(0,0,0,0.1);
+        }
+
+        /* Warna Teks di Dalam Form */
+        div[data-testid="stForm"] label, div[data-testid="stForm"] p, div[data-testid="stForm"] h3 {
+            color: white !important;
+        }
+
+        /* TOMBOL ANALISIS */
+        div[data-testid="stFormSubmitButton"] button {
+            background-color: #EFD2B0 !important;
+            color: #355872 !important;
+            border: 2px solid #EFD2B0 !important;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 10px 0px;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        div[data-testid="stFormSubmitButton"] button:hover {
+            background-color: #f7e6d2 !important;
+            border-color: #355872 !important;
+            transform: scale(1.01);
+        }
+
+        /* Card Hasil Prediksi */
+        .result-card {
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .result-card h2, .result-card p, .result-card div, .result-card h3 {
+            color: white !important;
+        }
+
+        .prob-text {
+            font-size: 60px;
+            font-weight: 900;
+            margin: 10px 0;
+        }
+
+        /* Force warna hitam pada kotak notifikasi */
+        [data-testid="stNotification"] {
+            color: #000000 !important;
+        }
+        [data-testid="stNotification"] div, 
+        [data-testid="stNotification"] p, 
+        [data-testid="stNotification"] strong {
+            color: #000000 !important;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+
 with st.form("main_form"):
     col1, col2 = st.columns(2)
     
