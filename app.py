@@ -29,7 +29,7 @@ with col1:
     work_pressure = st.slider("Work Pressure (0-5)", 0, 5, 0)
 
 with col2:
-    cgpa = st.number_input("CGPA", min_value=0.0, max_value=4.0, value=3.5, step=0.01)
+    cgpa = st.number_input("CGPA", min_value=0.0, max_value=10.0, value=7.5, step=0.01)
         
     # NOMOR 1: Study & Job Satisfaction mulai dari 0
     study_satisfaction = st.slider("Study Satisfaction (0-5)", 0, 5, 3)
