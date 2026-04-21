@@ -46,7 +46,7 @@ st.markdown("""
 
         /* TOMBOL ANALISIS */
         div[data-testid="stFormSubmitButton"] button {
-            background-color: #EFD2B0 !important;
+            background-color: #F4F0E4 !important;
             color: #355872 !important;
             border: 2px solid #EFD2B0 !important;
             font-weight: bold;
