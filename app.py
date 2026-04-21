@@ -16,7 +16,7 @@ st.set_page_config(page_title="Prediksi Depresi Mahasiswa", layout="wide")
 st.title("🎓 Aplikasi Prediksi Tingkat Depresi Mahasiswa")
 
 with st.form("main_form"):
-    col1, col2, col3 = st.columns(3)
+    col1, col2= st.columns(2)
     
 with col1:
     gender = st.selectbox("Gender", ["Male", "Female"])
@@ -24,26 +24,26 @@ with col1:
     city = st.text_input("City", "Jakarta")
     profession = st.text_input("Profession", "Student")
         
-    # NOMOR 1: Academic & Work Pressure mulai dari 0
+    # Academic & Work Pressure mulai dari 0
     academic_pressure = st.slider("Academic Pressure (0-5)", 0, 5, 3)
     work_pressure = st.slider("Work Pressure (0-5)", 0, 5, 0)
 
-with col2:
     cgpa = st.number_input("CGPA", min_value=0.0, max_value=10.0, value=7.5, step=0.01)
         
-    # NOMOR 1: Study & Job Satisfaction mulai dari 0
+    # Study & Job Satisfaction mulai dari 0
     study_satisfaction = st.slider("Study Satisfaction (0-5)", 0, 5, 3)
+    
+with col2:
     job_satisfaction = st.slider("Job Satisfaction (0-5)", 0, 5, 0)
         
     sleep_duration = st.selectbox("Sleep Duration", ["Less Than 5 Hours", "5-6 Hours", "7-8 Hours", "More Than 8 Hours"])
     dietary_habits = st.selectbox("Dietary Habits", ["Healthy", "Moderate", "Unhealthy"])
 
-with col3:
     degree = st.text_input("Degree", "S1")
     suicidal_thoughts = st.selectbox("Have you ever had suicidal thoughts ?", ["Yes", "No"])
     work_study_hours = st.number_input("Work/Study Hours", min_value=0, max_value=24, value=8)
         
-    # NOMOR 2: Financial Stress TETAP mulai dari 1 (sesuai gambar min=1.000000)
+    # Financial Stress TETAP mulai dari 1 (sesuai gambar min=1.000000)
     financial_stress = st.slider("Financial Stress (1-5)", 1, 5, 3)
         
     family_history = st.selectbox("Family History of Mental Illness", ["Yes", "No"])
