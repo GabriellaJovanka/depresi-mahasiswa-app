@@ -38,7 +38,7 @@ st.markdown("""
         div[data-testid="stFormSubmitButton"] button {
             background-color: #EFD2B0 !important;
             color: #355872 !important; /* Warna teks biru gelap */
-            border: 2px solid #FFFFFF !important;
+            border: 2px solid #000000 !important;
             font-weight: bold;
         }
 
