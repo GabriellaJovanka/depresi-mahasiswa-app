@@ -3,6 +3,7 @@ import pandas as pd
 import joblib
 import os
 
+# --- LOADING MODEL ---
 @st.cache_resource
 def load_model():
     base_dir = os.path.dirname(__file__)
@@ -11,8 +12,8 @@ def load_model():
 
 model_pipeline = load_model()
 
+# --- KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="Prediksi Depresi Mahasiswa", layout="wide")
-st.title("🎓 Aplikasi Prediksi Tingkat Depresi Mahasiswa")
 
 # --- CUSTOM CSS ---
 st.markdown("""
@@ -37,7 +38,9 @@ st.markdown("""
         }
 
         /* Warna Teks di Dalam Form */
-        div[data-testid="stForm"] label, div[data-testid="stForm"] p, div[data-testid="stForm"] h3 {
+        div[data-testid="stForm"] label, 
+        div[data-testid="stForm"] p, 
+        div[data-testid="stForm"] h3 {
             color: white !important;
         }
 
@@ -78,10 +81,6 @@ st.markdown("""
         }
 
         /* Force warna hitam pada kotak notifikasi */
-        [data-testid="stNotification"] {
-            color: #000000 !important;
-        }
-        [data-testid="stNotification"] div, 
         [data-testid="stNotification"] p, 
         [data-testid="stNotification"] strong {
             color: #000000 !important;
@@ -89,11 +88,13 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+st.title("🎓 Aplikasi Prediksi Tingkat Depresi Mahasiswa")
 
+# --- FORM INPUT ---
 with st.form("main_form"):
     col1, col2 = st.columns(2)
     
-    with col1: # Pastikan ini menjorok ke dalam 'with st.form'
+    with col1:
         gender = st.selectbox("Gender", ["Male", "Female"])
         age = st.number_input("Age", min_value=18, max_value=60, value=20)
         city = st.text_input("City", "Jakarta")
@@ -103,7 +104,7 @@ with st.form("main_form"):
         cgpa = st.number_input("CGPA", min_value=0.0, max_value=10.0, value=7.5, step=0.01)
         study_satisfaction = st.slider("Study Satisfaction (0-5)", 0, 5, 3)
     
-    with col2: # Pastikan ini sejajar dengan col1
+    with col2:
         job_satisfaction = st.slider("Job Satisfaction (0-5)", 0, 5, 0)
         sleep_duration = st.selectbox("Sleep Duration", ["Less Than 5 Hours", "5-6 Hours", "7-8 Hours", "More Than 8 Hours"])
         dietary_habits = st.selectbox("Dietary Habits", ["Healthy", "Moderate", "Unhealthy"])
@@ -115,26 +116,10 @@ with st.form("main_form"):
 
     st.markdown("---")
 
-    # 3. Javascript (DIBETULKAN: Ditambah penutup tag script)
-    st.components.v1.html(
-        """
-        <script>
-            var customBtn = window.parent.document.getElementById('custom-submit-btn');
-            var realBtn = window.parent.document.querySelector('div.stButton > button[kind="primaryFormSubmit"]');
-            if (customBtn && realBtn) {
-                customBtn.onclick = function() {
-                    realBtn.click();
-                };
-            }
-        </script>
-        """,
-        height=0
-    )
-
-    # Tombol asli tetap harus ada di dalam form agar 'submitted' bekerja
+    # Tombol asli tetap harus ada di dalam form
     submitted = st.form_submit_button("Analisis Sekarang", use_container_width=True)
 
-# --- PROSES PREDIKSI (Di luar blok with st.form) ---
+# --- PROSES PREDIKSI ---
 if submitted:
     try:
         input_dict = {
@@ -149,22 +134,20 @@ if submitted:
         }
         
         data_df = pd.DataFrame([input_dict])
+        
+        # Pre-processing ringan
         for col in data_df.select_dtypes(include=['object']).columns:
             data_df[col] = data_df[col].astype(str).str.strip()
 
-        prediction = model_pipeline.predict(data_df)
-        probability = model.predict_proba(data_df)[0][1] * 100
+        # Prediksi Label dan Probabilitas
+        prediction = model_pipeline.predict(data_df)[0]
+        # Pastikan menggunakan model_pipeline jika predict_proba ada di dalam pipeline
+        probability = model_pipeline.predict_proba(data_df)[0][1] * 100
         
         st.divider()
-    #     if prediction[0] == 1:
-    #         st.error("⚠️ Hasil: Berisiko Depresi")
-    #     else:
-    #         st.success("✅ Hasil: Tidak Berisiko")
 
-    # except Exception as e:
-    #     st.error(f"❌ Terjadi kesalahan: {e}")
-
-      if prediction == 1:
+        # Logika Tampilan Hasil
+        if prediction == 1:
             bg_color = "#355872"
             status_text = "Berisiko Tinggi Depresi"
             icon = "⚠️"
@@ -183,9 +166,9 @@ if submitted:
         """, unsafe_allow_html=True)
 
         if prediction == 1:
-            st.warning("*Rekomendasi:* Hasil ini menunjukkan indikasi tekanan psikologis yang kuat. Jangan ragu untuk berbicara dengan konselor, psikolog, atau orang terdekat yang Anda percayai.")
+            st.warning("**Rekomendasi:** Hasil ini menunjukkan indikasi tekanan psikologis yang kuat. Jangan ragu untuk berbicara dengan konselor, psikolog, atau orang terdekat yang Anda percayai.")
         else:
-            st.success("*Rekomendasi:* Pertahankan kesehatan mental Anda. Tetap luangkan waktu untuk istirahat dan hobi di tengah kesibukan akademik.")
+            st.success("**Rekomendasi:** Pertahankan kesehatan mental Anda. Tetap luangkan waktu untuk istirahat dan hobi di tengah kesibukan akademik.")
 
     except Exception as e:
         st.error(f"❌ Terjadi kesalahan: {e}")
