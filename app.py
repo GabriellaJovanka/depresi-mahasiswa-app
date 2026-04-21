@@ -14,22 +14,24 @@ model = load_model()
 st.set_page_config(page_title="Prediksi Depresi Mahasiswa", layout="wide")
 st.title("🔍 Aplikasi Prediksi Tingkat Depresi Mahasiswa")
 
-# --- CSS UNTUK TOMBOL BIRU ---
+# --- SET BACKGROUND BIRU NAVY ---
 st.markdown("""
     <style>
-        /* Mencari tombol primary di dalam form */
-        div[data-testid="stForm"] button[kind="primary"] {
-            background-color: #007BFF !important;
-            color: white !important;
-            border: none !important;
-            height: 3em !important;
-            font-weight: bold !important;
+        /* Mengubah background utama aplikasi */
+        .stApp {
+            background-color: #000080; /* Navy Blue Hex */
         }
-        
-        /* Efek saat tombol di-hover */
-        div[data-testid="stForm"] button[kind="primary"]:hover {
-            background-color: #0056b3 !important;
-            border-color: #0056b3 !important;
+
+        /* Opsional: Mengubah warna teks jadi putih agar terbaca di background gelap */
+        .stApp h1, .stApp h2, .stApp h3, .stApp p, .stApp span, .stApp label {
+            color: white !important;
+        }
+
+        /* Membuat kotak form tetap terlihat rapi dengan background agak transparan */
+        div[data-testid="stForm"] {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
         }
     </style>
 """, unsafe_allow_html=True)
