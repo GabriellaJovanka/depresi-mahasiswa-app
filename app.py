@@ -61,7 +61,7 @@ with st.form("main_form"):
         family_history = st.selectbox("Family History of Mental Illness", ["Yes", "No"])
 
     # Tombol dengan type="primary" agar CSS di atas bisa menargetkan tombol ini
-    submitted = st.form_submit_button("Analisis Depresi", use_container_width=True, type="primary")
+    submitted = st.form_submit_button("Analisis Depresi", use_container_width=True, type="primary:#EFD2B0")
 
 if submitted:
     try:
