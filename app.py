@@ -18,29 +18,34 @@ st.title("🎓 Aplikasi Prediksi Tingkat Depresi Mahasiswa")
 with st.form("main_form"):
     col1, col2, col3 = st.columns(3)
     
-    with col1:
-        # PENTING: Pilihan di selectbox harus SAMA PERSIS dengan isi CSV di Colab
+   with col1:
         gender = st.selectbox("Gender", ["Male", "Female"])
         age = st.number_input("Age", min_value=18, max_value=60, value=20)
         city = st.text_input("City", "Jakarta")
         profession = st.text_input("Profession", "Student")
-        academic_pressure = st.slider("Academic Pressure (1-5)", 1, 5, 3)
-        work_pressure = st.slider("Work Pressure (1-5)", 1, 5, 1)
-
-    with col2:
-        cgpa = st.number_input("CGPA", min_value=0.0, max_value=4.0, value=3.5, step=0.01)
-        study_satisfaction = st.slider("Study Satisfaction (1-5)", 1, 5, 3)
-        job_satisfaction = st.slider("Job Satisfaction (1-5)", 1, 5, 1)
         
-        # CEK: Apakah di Colab tulisannya 'Less than 5 hours' atau 'Less than 5 hours ' (pakai spasi)?
+        # NOMOR 1: Academic & Work Pressure mulai dari 0
+        academic_pressure = st.slider("Academic Pressure (0-5)", 0, 5, 3)
+        work_pressure = st.slider("Work Pressure (0-5)", 0, 5, 0)
+
+   with col2:
+        cgpa = st.number_input("CGPA", min_value=0.0, max_value=4.0, value=3.5, step=0.01)
+        
+        # NOMOR 1: Study & Job Satisfaction mulai dari 0
+        study_satisfaction = st.slider("Study Satisfaction (0-5)", 0, 5, 3)
+        job_satisfaction = st.slider("Job Satisfaction (0-5)", 0, 5, 0)
+        
         sleep_duration = st.selectbox("Sleep Duration", ["Less Than 5 Hours", "5-6 Hours", "7-8 Hours", "More Than 8 Hours"])
         dietary_habits = st.selectbox("Dietary Habits", ["Healthy", "Moderate", "Unhealthy"])
 
-    with col3:
+   with col3:
         degree = st.text_input("Degree", "S1")
         suicidal_thoughts = st.selectbox("Have you ever had suicidal thoughts ?", ["Yes", "No"])
         work_study_hours = st.number_input("Work/Study Hours", min_value=0, max_value=24, value=8)
+        
+        # NOMOR 2: Financial Stress TETAP mulai dari 1 (sesuai gambar min=1.000000)
         financial_stress = st.slider("Financial Stress (1-5)", 1, 5, 3)
+        
         family_history = st.selectbox("Family History of Mental Illness", ["Yes", "No"])
 
     submitted = st.form_submit_button("Analisis Sekarang")
