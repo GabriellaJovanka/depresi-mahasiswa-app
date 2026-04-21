@@ -1,61 +1,78 @@
 import streamlit as st
 import pandas as pd
 import joblib
+import os
 
-# Konfigurasi Halaman
-st.set_page_config(page_title="Prediksi Kesehatan Mental", layout="centered")
-
-# Load Model (Hanya dilakukan sekali agar cepat)
+# 1. Load Model
 @st.cache_resource
-def load_data():
-    return joblib.load('model_final_depresi.pkl')
+def load_model():
+    base_dir = os.path.dirname(__file__)
+    model_path = os.path.join(base_dir, 'model_final_depresi.pkl')
+    return joblib.load(model_path)
 
-model = load_data()
+model = load_model()
 
-st.title("🧠 Deteksi Risiko Depresi Mahasiswa")
-st.write("Aplikasi ini membantu memprediksi kecenderungan depresi berdasarkan data akademik dan pola hidup.")
+st.title("Aplikasi Analisis Kesehatan Mental Mahasiswa")
+st.write("Silakan isi formulir di bawah ini untuk melakukan prediksi.")
 
-# Form Input
+# --- FORM INPUT ---
 with st.form("main_form"):
-    st.subheader("Informasi Mahasiswa")
-    
-    # Kolom Kiri
     col1, col2 = st.columns(2)
-    with col1:
-        age = st.number_input("Umur", 17, 50, 20)
-        gender = st.selectbox("Jenis Kelamin", ["Male", "Female"])
-        city = st.selectbox("Tipe Kota", ["Tier 1", "Tier 2"])
-        academic_pressure = st.slider("Tekanan Akademik (1-5)", 1, 5, 3)
-        cgpa = st.number_input("CGPA", 0.0, 10.0, 3.5)
-
-    # Kolom Kanan
-    with col2:
-        sleep_duration = st.selectbox("Durasi Tidur", ["Less Than 5 Hours", "5-6 Hours", "7-8 Hours", "More Than 8 Hours"])
-        dietary_habits = st.selectbox("Pola Makan", ["Healthy", "Moderate", "Unhealthy"])
-        degree = st.selectbox("Jenjang", ["High School", "Bachelors", "Masters", "Doctorate"])
-        study_satisfaction = st.slider("Kepuasan Studi (1-5)", 1, 5, 3)
-
-    submitted = st.form_submit_button("Cek Sekarang")
-
-if submitted:
-    # Buat DataFrame dari input
-    input_df = pd.DataFrame({
-        'Age': [age], 'Gender': [gender], 'City': [city],
-        'Academic Pressure': [academic_pressure], 'CGPA': [cgpa],
-        'Sleep Duration': [sleep_duration], 'Dietary Habits': [dietary_habits],
-        'Degree': [degree], 'Study Satisfaction': [study_satisfaction]
-    })
     
-    # Jalankan Prediksi
-    res = model.predict(input_df)
-    prob = model.predict_proba(input_df)[0][1]
+    with col1:
+        age = st.number_input("Age", min_value=18, max_value=60, value=20)
+        gender = st.selectbox("Gender", ["Male", "Female"])
+        academic_pressure = st.slider("Academic Pressure (1-5)", 1, 5, 3)
+        study_satisfaction = st.slider("Study Satisfaction (1-5)", 1, 5, 3)
+        cgpa = st.number_input("CGPA / IPK", min_value=0.0, max_value=4.0, value=3.5, step=0.01)
+        
+    with col2:
+        # Kolom baru yang kamu minta:
+        work_study_hours = st.number_input("Work/Study Hours (per day)", min_value=0, max_value=24, value=8)
+        financial_stress = st.slider("Financial Stress (1-5)", 1, 5, 3)
+        suicidal_thoughts = st.selectbox("Have you ever had suicidal thoughts?", ["Yes", "No"])
+        
+        # Tambahan fitur lain jika ada (sesuaikan dengan datasetmu)
+        sleep_duration = st.selectbox("Sleep Duration", ["Less than 5 hours", "5-6 hours", "7-8 hours", "More than 8 hours"])
+        dietary_habits = st.selectbox("Dietary Habits", ["Healthy", "Moderate", "Unhealthy"])
 
-    st.markdown("---")
-    if res[0] == 1:
-        st.error(f"⚠️ **Hasil: Berisiko Depresi** (Probabilitas: {prob:.2%})")
-        st.write("Tetap semangat! Jangan ragu untuk berdiskusi dengan orang yang kamu percayai.")
-    else:
-        st.success(f"✅ **Hasil: Tidak Berisiko** (Probabilitas: {1-prob:.2%})")
-        st.write("Pertahankan pola hidup sehatmu!")
+    submitted = st.form_submit_button("Analisis Sekarang")
 
-st.caption("Aplikasi ini dibuat untuk tujuan edukasi (Tugas Fast Track).")
+# --- PROSES PREDIKSI ---
+if submitted:
+    try:
+        # PENTING: Susun urutan kolom di bawah ini AGAR SAMA PERSIS dengan dataset Colab
+        # Pastikan nama key (sebelah kiri) SAMA PERSIS dengan nama kolom di CSV
+        
+        input_dict = {
+            'Age': age,
+            'Gender': gender,
+            'Academic Pressure': academic_pressure,
+            'Work/Study Hours': work_study_hours,     # Kolom baru
+            'Financial Stress': financial_stress,     # Kolom baru
+            'Study Satisfaction': study_satisfaction,
+            'Sleep Duration': sleep_duration,
+            'Dietary Habits': dietary_habits,
+            'Have you ever had suicidal thoughts?': suicidal_thoughts, # Kolom baru
+            'CGPA': cgpa
+        }
+        
+        # Mengubah ke DataFrame
+        data_df = pd.DataFrame([input_dict])
+
+        # Lakukan Prediksi
+        prediction = model.predict(data_df)
+        probability = model.predict_proba(data_df)[0][1]
+
+        # Tampilkan Hasil
+        st.divider()
+        if prediction[0] == 1:
+            st.error(f"⚠️ Hasil Prediksi: Berisiko Depresi (Probabilitas: {probability:.2%})")
+            st.warning("Saran: Segera konsultasikan kondisi Anda dengan profesional atau layanan kesehatan mental terdekat.")
+        else:
+            st.success(f"✅ Hasil Prediksi: Tidak Berisiko (Probabilitas: {1-probability:.2%})")
+            st.info("Saran: Tetap jaga pola hidup sehat dan manajemen stres yang baik.")
+
+    except Exception as e:
+        st.error(f"Terjadi kesalahan teknis: {e}")
+        st.info("💡 Tips: Periksa kembali apakah urutan dan nama kolom di app.py sudah sama dengan model di Colab.")
