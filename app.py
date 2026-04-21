@@ -157,7 +157,7 @@ if submitted:
             icon = "✅"
 
         st.markdown(f"""
-            <div class="result-card" style="background-color: {bg_color}; border: 5px solid rgba(255,255,255);">
+            <div class="result-card" style="background-color: {bg_color}; border: 5px solid rgba(255,255,255, 0.1);">
                 <h2 style="margin-top: 0;">{icon} Hasil Analisis {icon}</h2>
                 <p style="margin-bottom: 0; opacity: 0.9;">Probabilitas:</p>
                 <div class="prob-text">{probability:.1f}%</div>
