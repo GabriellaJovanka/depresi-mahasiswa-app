@@ -17,7 +17,7 @@ st.title("🎓 Aplikasi Prediksi Tingkat Depresi Mahasiswa")
 with st.form("main_form"):
     col1, col2 = st.columns(2)
     
-    with col1: # Pastikan ini menjorok ke dalam 'with st.form'
+    with col1:
         gender = st.selectbox("Gender", ["Male", "Female"])
         age = st.number_input("Age", min_value=18, max_value=60, value=20)
         city = st.text_input("City", "Jakarta")
@@ -27,7 +27,7 @@ with st.form("main_form"):
         cgpa = st.number_input("CGPA", min_value=0.0, max_value=10.0, value=7.5, step=0.01)
         study_satisfaction = st.slider("Study Satisfaction (0-5)", 0, 5, 3)
     
-    with col2: # Pastikan ini sejajar dengan col1
+    with col2:
         job_satisfaction = st.slider("Job Satisfaction (0-5)", 0, 5, 0)
         sleep_duration = st.selectbox("Sleep Duration", ["Less Than 5 Hours", "5-6 Hours", "7-8 Hours", "More Than 8 Hours"])
         dietary_habits = st.selectbox("Dietary Habits", ["Healthy", "Moderate", "Unhealthy"])
@@ -39,17 +39,12 @@ with st.form("main_form"):
 
     st.markdown("---")
 
-    # 1. CSS untuk mempercantik tombol merah & benar-benar menyembunyikan tombol asli
-    st.markdown
-
-   ("""
+    # 1. CSS untuk menyembunyikan tombol asli & mempercantik tombol merah
+    st.markdown("""
         <style>
-            /* Sembunyikan tombol bawaan Streamlit secara total */
             div[data-testid="stForm"] button[kind="primaryFormSubmit"] {
                 display: none !important;
             }
-            
-            /* Gaya tombol merah kustom */
             .my-red-button {
                 background-color: #FF4A4A;
                 color: white;
@@ -72,26 +67,23 @@ with st.form("main_form"):
     # 2. Tombol Merah Kustom
     st.markdown('<button class="my-red-button" onclick="clickRealButton()">🔍 Prediksi Sekarang</button>', unsafe_allow_html=True)
 
-    # 3. Javascript yang lebih kuat untuk 'menembak' tombol asli
+    # 3. Javascript untuk memicu klik pada tombol asli
     st.components.v1.html("""
         <script>
             function clickRealButton() {
-                // Mencari tombol asli di dalam dokumen parent
                 var buttons = window.parent.document.querySelectorAll('button[kind="primaryFormSubmit"]');
-                // Klik tombol yang paling terakhir (milik form ini)
                 if (buttons.length > 0) {
                     buttons[buttons.length - 1].click();
                 }
             }
-            // Daftarkan fungsi ke window agar bisa dipanggil dari onclick HTML
             window.clickRealButton = clickRealButton;
         </script>
     """, height=0)
 
-    # 4. Tombol asli (Inilah yang akan 'diklik' oleh tombol merah secara gaib)
+    # 4. Tombol asli (disembunyikan oleh CSS di atas)
     submitted = st.form_submit_button("Analisis Sekarang")
 
-# --- PROSES PREDIKSI (Di luar blok with st.form) ---
+# --- PROSES PREDIKSI ---
 if submitted:
     try:
         input_dict = {
@@ -106,6 +98,8 @@ if submitted:
         }
         
         data_df = pd.DataFrame([input_dict])
+        
+        # Bersihkan spasi pada data teks
         for col in data_df.select_dtypes(include=['object']).columns:
             data_df[col] = data_df[col].astype(str).str.strip()
 
