@@ -22,7 +22,7 @@ st.markdown("""
             background-color: #EFD2B0; 
         }
 
-        /* Warna Teks Judul Halaman (Luar Form & Card) */
+        /* Warna Teks Judul Halaman */
         .stApp h1, .stApp h2 {
             color: #355872 !important;
         }
@@ -36,7 +36,7 @@ st.markdown("""
             box-shadow: 0px 10px 25px rgba(0,0,0,0.1);
         }
 
-        /* Warna Teks di Dalam Form (Label dll) */
+        /* Warna Teks di Dalam Form (Putih agar kontras) */
         div[data-testid="stForm"] label, div[data-testid="stForm"] p, div[data-testid="stForm"] h3 {
             color: white !important;
         }
@@ -67,7 +67,6 @@ st.markdown("""
             margin-top: 20px;
         }
         
-        /* Gaya Teks di Dalam Card agar Kontras */
         .result-card h2, .result-card p, .result-card div, .result-card h3 {
             color: white !important;
         }
@@ -78,9 +77,15 @@ st.markdown("""
             margin: 10px 0;
         }
 
-        /* Mengubah warna teks di dalam kotak info, warning, dan success menjadi hitam */
-        div[data-testid="stNotification"] p {
-            color: black !important;
+        /* FORCE WARNA HITAM PADA KOTAK REKOMENDASI (SELECTOR EKSTRA KUAT) */
+        [data-testid="stNotification"] {
+            color: #000000 !important;
+        }
+        
+        [data-testid="stNotification"] div, 
+        [data-testid="stNotification"] p, 
+        [data-testid="stNotification"] strong {
+            color: #000000 !important;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -137,18 +142,18 @@ if submitted:
 
         # Prediksi
         prediction = model.predict(data_df)[0]
-        # Mengambil probabilitas (asumsi index 1 adalah 'Depresi')
+        # Mengambil probabilitas
         probability = model.predict_proba(data_df)[0][1] * 100
 
         st.divider()
 
-        # Tampilan Card Hasil (PERUBAHAN WARNA DI SINI)
+        # Tampilan Card Hasil (Background Biru Navy)
         if prediction == 1:
-            bg_color = "#355872" # Biru Navy (Warna Form)
+            bg_color = "#355872"
             status_text = "Berisiko Tinggi Depresi"
             icon = "⚠️"
         else:
-            bg_color = "#27AE60" # Hijau (Tetap Hijau untuk Risiko Rendah)
+            bg_color = "#27AE60" # Hijau untuk kondisi aman
             status_text = "Risiko Rendah / Tidak Berisiko"
             icon = "✅"
 
@@ -161,7 +166,7 @@ if submitted:
             </div>
         """, unsafe_allow_html=True)
 
-        # Pesan Tambahan
+        # Pesan Rekomendasi (Teks akan berwarna hitam karena CSS)
         if prediction == 1:
             st.warning("**Rekomendasi:** Hasil ini menunjukkan indikasi tekanan psikologis yang kuat. Jangan ragu untuk berbicara dengan konselor, psikolog, atau orang terdekat yang Anda percayai.")
         else:
@@ -169,4 +174,3 @@ if submitted:
 
     except Exception as e:
         st.error(f"❌ Terjadi kesalahan: {e}")
-        st.info("Catatan: Pastikan model Anda mendukung fungsi 'predict_proba'.")
