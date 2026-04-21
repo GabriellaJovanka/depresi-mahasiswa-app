@@ -56,7 +56,7 @@ with st.form("main_form"):
     )
 
     # Tombol asli tetap harus ada di dalam form agar 'submitted' bekerja
-    submitted = st.form_submit_button("Analisis Sekarang")
+    submitted = st.form_submit_button("Analisis Sekarang", use_container_width=True)
 
 # --- PROSES PREDIKSI (Di luar blok with st.form) ---
 if submitted:
