@@ -39,9 +39,6 @@ with st.form("main_form"):
 
     st.markdown("---")
 
-    # 2. Render Tombol HTML
-    st.markdown('<button class="custom-blue-button" id="custom-submit-btn">🔍 Prediksi Sekarang</button>', unsafe_allow_html=True)
-
     # 3. Javascript (DIBETULKAN: Ditambah penutup tag script)
     st.components.v1.html(
         """
