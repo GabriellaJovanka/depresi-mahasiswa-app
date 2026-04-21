@@ -19,7 +19,7 @@ st.markdown("""
     <style>
         /* Mengubah background utama aplikasi */
         .stApp {
-            background-color: #406AAF; /* Navy Blue Hex */
+            background-color: #F7F8F0; /* Navy Blue Hex */
         }
 
         /* Opsional: Mengubah warna teks jadi putih agar terbaca di background gelap */
