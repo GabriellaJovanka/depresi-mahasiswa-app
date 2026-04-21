@@ -9,7 +9,8 @@ def load_model():
     model_path = os.path.join(base_dir, 'model_final_depresi.pkl')
     return joblib.load(model_path)
 
-model = load_model()
+# model = load_model()
+model_pipeline = load_model()
 
 st.set_page_config(page_title="Prediksi Depresi Mahasiswa", layout="wide")
 st.title("🎓 Aplikasi Prediksi Tingkat Depresi Mahasiswa")
