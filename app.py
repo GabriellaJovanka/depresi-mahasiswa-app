@@ -32,7 +32,7 @@ with st.form("main_form"):
         job_satisfaction = st.slider("Job Satisfaction (1-5)", 1, 5, 1)
         
         # CEK: Apakah di Colab tulisannya 'Less than 5 hours' atau 'Less than 5 hours ' (pakai spasi)?
-        sleep_duration = st.selectbox("Sleep Duration", ["Less Than 5 Hours", "5-6 hours", "7-8 hours", "More than 8 hours"])
+        sleep_duration = st.selectbox("Sleep Duration", ["Less Than 5 Hours", "5-6 Hours", "7-8 Hours", "More Than 8 Hours"])
         dietary_habits = st.selectbox("Dietary Habits", ["Healthy", "Moderate", "Unhealthy"])
 
     with col3:
