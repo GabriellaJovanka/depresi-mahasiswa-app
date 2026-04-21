@@ -57,7 +57,7 @@ with st.form("main_form"):
         </style>
     """, unsafe_allow_html=True)
 
-    submitted = st.form_submit_button("Analisis Depresi", use_container_width=True)
+    submitted = st.form_submit_button("Analisis Depresi", use_container_width=True, type="primary")
 
 if submitted:
     try:
