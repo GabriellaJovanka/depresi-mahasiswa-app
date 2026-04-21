@@ -15,7 +15,8 @@ def load_model():
 model = load_model()
 
 # --- CUSTOM CSS ---
-st.markdown("""
+st.markdown
+("""
     <style>
         /* Background Utama */
         .stApp {
@@ -77,6 +78,8 @@ st.markdown("""
             font-weight: 900;
             margin: 10px 0;
         }
+        
+    </style>
 """, unsafe_allow_html=True)
 
 st.title("🔍 Aplikasi Prediksi Tingkat Depresi Mahasiswa")
@@ -164,3 +167,4 @@ if submitted:
     except Exception as e:
         st.error(f"❌ Terjadi kesalahan: {e}")
         st.info("Catatan: Pastikan model Anda mendukung fungsi 'predict_proba'.")
+
