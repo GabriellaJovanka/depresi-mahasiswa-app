@@ -39,36 +39,8 @@ with st.form("main_form"):
 
     st.markdown("---")
 
-    # 1. CSS Kustom
-    custom_button_style = """
-        <style>
-            .custom-red-button {
-                background-color: #FF4A4A;
-                color: white !important;
-                border-radius: 20px;
-                border: none;
-                padding: 12px 24px;
-                font-size: 16px;
-                font-weight: bold;
-                width: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                transition: background-color 0.3s ease;
-            }
-            .custom-red-button:hover {
-                background-color: #E63939;
-            }
-            div.stButton > button:first-child[kind="primaryFormSubmit"] {
-                display: none !important;
-            }
-        </style>
-    """
-    st.markdown(custom_button_style, unsafe_allow_html=True)
-
     # 2. Render Tombol HTML
-    st.markdown('<button class="custom-red-button" id="custom-submit-btn">🔍 Prediksi Sekarang</button>', unsafe_allow_html=True)
+    st.markdown('<button class="custom-blue-button" id="custom-submit-btn">🔍 Prediksi Sekarang</button>', unsafe_allow_html=True)
 
     # 3. Javascript (DIBETULKAN: Ditambah penutup tag script)
     st.components.v1.html(
