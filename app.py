@@ -3,7 +3,6 @@ import pandas as pd
 import joblib
 import os
 
-# 1. Load Model
 @st.cache_resource
 def load_model():
     base_dir = os.path.dirname(__file__)
@@ -14,14 +13,12 @@ model = load_model()
 
 st.set_page_config(page_title="Prediksi Depresi Mahasiswa", layout="wide")
 st.title("🎓 Aplikasi Prediksi Tingkat Depresi Mahasiswa")
-st.write("Isi semua data di bawah ini untuk mendapatkan hasil analisis.")
 
-# --- FORM INPUT ---
 with st.form("main_form"):
-    # Kita bagi 3 kolom agar tidak terlalu panjang ke bawah
     col1, col2, col3 = st.columns(3)
     
     with col1:
+        # PENTING: Pilihan di selectbox harus SAMA PERSIS dengan isi CSV di Colab
         gender = st.selectbox("Gender", ["Male", "Female"])
         age = st.number_input("Age", min_value=18, max_value=60, value=20)
         city = st.text_input("City", "Jakarta")
@@ -33,6 +30,8 @@ with st.form("main_form"):
         cgpa = st.number_input("CGPA", min_value=0.0, max_value=4.0, value=3.5, step=0.01)
         study_satisfaction = st.slider("Study Satisfaction (1-5)", 1, 5, 3)
         job_satisfaction = st.slider("Job Satisfaction (1-5)", 1, 5, 1)
+        
+        # CEK: Apakah di Colab tulisannya 'Less than 5 hours' atau 'Less than 5 hours ' (pakai spasi)?
         sleep_duration = st.selectbox("Sleep Duration", ["Less than 5 hours", "5-6 hours", "7-8 hours", "More than 8 hours"])
         dietary_habits = st.selectbox("Dietary Habits", ["Healthy", "Moderate", "Unhealthy"])
 
@@ -45,10 +44,9 @@ with st.form("main_form"):
 
     submitted = st.form_submit_button("Analisis Sekarang")
 
-# --- PROSES PREDIKSI ---
 if submitted:
     try:
-        # MENYUSUN 16 KOLOM SESUAI URUTAN YANG DIMINTA MODEL
+        # Susun data sesuai urutan 16 kolom
         input_dict = {
             'Gender': gender,
             'Age': age,
@@ -68,19 +66,22 @@ if submitted:
             'Family History of Mental Illness': family_history
         }
         
-        # Konversi ke DataFrame
         data_df = pd.DataFrame([input_dict])
+
+        # EKSTRA: Pastikan tipe data objek/string tidak ada spasi tambahan di ujung
+        for col in data_df.select_dtypes(include=['object']).columns:
+            data_df[col] = data_df[col].astype(str).str.strip()
 
         # Prediksi
         prediction = model.predict(data_df)
-        probability = model.predict_proba(data_df)[0][1]
-
-        # Tampilan Hasil
+        
         st.divider()
         if prediction[0] == 1:
-            st.error(f"⚠️ Hasil: Berisiko Depresi (Tingkat Risiko: {probability:.2%})")
+            st.error("⚠️ Hasil: Berisiko Depresi")
         else:
-            st.success(f"✅ Hasil: Tidak Berisiko (Tingkat Aman: {1-probability:.2%})")
+            st.success("✅ Hasil: Tidak Berisiko")
 
     except Exception as e:
         st.error(f"❌ Terjadi kesalahan: {e}")
+        # Jika error kategori muncul lagi, kita tampilkan list kategori yang dikenali encoder
+        st.info("Saran: Cek kembali apakah teks pilihan (seperti Sleep Duration) sudah sama persis dengan dataset asli.")
