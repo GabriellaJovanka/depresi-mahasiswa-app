@@ -153,12 +153,39 @@ if submitted:
             data_df[col] = data_df[col].astype(str).str.strip()
 
         prediction = model_pipeline.predict(data_df)
+        probability = model.predict_proba(data_df)[0][1] * 100
         
         st.divider()
-        if prediction[0] == 1:
-            st.error("⚠️ Hasil: Berisiko Depresi")
+    #     if prediction[0] == 1:
+    #         st.error("⚠️ Hasil: Berisiko Depresi")
+    #     else:
+    #         st.success("✅ Hasil: Tidak Berisiko")
+
+    # except Exception as e:
+    #     st.error(f"❌ Terjadi kesalahan: {e}")
+
+      if prediction == 1:
+            bg_color = "#355872"
+            status_text = "Berisiko Tinggi Depresi"
+            icon = "⚠️"
         else:
-            st.success("✅ Hasil: Tidak Berisiko")
+            bg_color = "#27AE60"
+            status_text = "Risiko Rendah / Tidak Berisiko"
+            icon = "✅"
+
+        st.markdown(f"""
+            <div class="result-card" style="background-color: {bg_color}; border: 5px solid rgba(255,255,255,0.1);">
+                <h2 style="margin-top: 0;">{icon} Hasil Analisis {icon}</h2>
+                <p style="margin-bottom: 0; opacity: 0.9;">Probabilitas Estimasi:</p>
+                <div class="prob-text">{probability:.1f}%</div>
+                <h3 style="margin-bottom: 0;">Status: {status_text}</h3>
+            </div>
+        """, unsafe_allow_html=True)
+
+        if prediction == 1:
+            st.warning("*Rekomendasi:* Hasil ini menunjukkan indikasi tekanan psikologis yang kuat. Jangan ragu untuk berbicara dengan konselor, psikolog, atau orang terdekat yang Anda percayai.")
+        else:
+            st.success("*Rekomendasi:* Pertahankan kesehatan mental Anda. Tetap luangkan waktu untuk istirahat dan hobi di tengah kesibukan akademik.")
 
     except Exception as e:
         st.error(f"❌ Terjadi kesalahan: {e}")
