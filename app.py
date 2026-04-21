@@ -20,7 +20,7 @@ st.markdown("""
     <style>
         /* Background Utama */
         .stApp {
-            background-color: #F4F0E4; 
+            background-color: #000000; 
         }
 
         /* Warna Teks Judul Halaman */
