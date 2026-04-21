@@ -29,7 +29,7 @@ st.markdown("""
 
         /* Membuat kotak form tetap terlihat rapi dengan background agak transparan */
         div[data-testid="stForm"] {
-            background-color: #427AB5;
+            background-color: #FFE8BE;
             padding: 20px;
             border-radius: 10px;
         }
