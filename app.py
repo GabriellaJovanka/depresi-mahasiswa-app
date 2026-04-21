@@ -12,7 +12,7 @@ def load_model():
 model = load_model()
 
 st.set_page_config(page_title="Prediksi Depresi Mahasiswa", layout="wide")
-st.title("🎓 Aplikasi Prediksi Tingkat Depresi Mahasiswa")
+st.title("🔍 Aplikasi Prediksi Tingkat Depresi Mahasiswa")
 
 # --- CSS UNTUK TOMBOL BIRU ---
 st.markdown("""
