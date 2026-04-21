@@ -22,10 +22,9 @@ st.markdown("""
             background-color: #EFD2B0; 
         }
 
-        /* Warna Teks Judul dan Label */
-        .stApp h1, .stApp h2, .stApp h3, .stApp p, .stApp span, .stApp label {
+        /* Warna Teks Judul Halaman (Luar Form & Card) */
+        .stApp h1, .stApp h2 {
             color: #355872 !important;
-            font-weight: 500;
         }
 
         /* Styling Form */
@@ -37,7 +36,7 @@ st.markdown("""
             box-shadow: 0px 10px 25px rgba(0,0,0,0.1);
         }
 
-        /* Warna Teks di Dalam Form (Putih agar kontras dengan biru) */
+        /* Warna Teks di Dalam Form (Label dll) */
         div[data-testid="stForm"] label, div[data-testid="stForm"] p, div[data-testid="stForm"] h3 {
             color: white !important;
         }
@@ -66,9 +65,13 @@ st.markdown("""
             border-radius: 15px;
             text-align: center;
             margin-top: 20px;
-            color: white !important;
         }
         
+        /* Gaya Teks di Dalam Card agar Kontras */
+        .result-card h2, .result-card p, .result-card div, .result-card h3 {
+            color: white !important;
+        }
+
         .prob-text {
             font-size: 60px;
             font-weight: 900;
@@ -134,22 +137,22 @@ if submitted:
 
         st.divider()
 
-        # Tampilan Card Hasil
+        # Tampilan Card Hasil (PERUBAHAN WARNA DI SINI)
         if prediction == 1:
-            bg_color = "#E74C3C" # Merah Lembut
+            bg_color = "#355872" # Biru Navy (Warna Form)
             status_text = "Berisiko Tinggi Depresi"
             icon = "⚠️"
         else:
-            bg_color = "#27AE60" # Hijau Lembut
+            bg_color = "#27AE60" # Hijau (Tetap Hijau untuk Risiko Rendah)
             status_text = "Risiko Rendah / Tidak Berisiko"
             icon = "✅"
 
         st.markdown(f"""
-            <div class="result-card" style="background-color: {bg_color}; border: 5px solid rgba(255,255,255,0.2);">
-                <h2 style="color: white !important; margin-top: 0;">{icon} Hasil Analisis {icon}</h2>
-                <p style="color: white !important; margin-bottom: 0; opacity: 0.9;">Probabilitas Estimasi:</p>
-                <div class="prob-text" style="color: white !important;">{probability:.1f}%</div>
-                <h3 style="color: white !important; margin-bottom: 0;">Status: {status_text}</h3>
+            <div class="result-card" style="background-color: {bg_color}; border: 5px solid rgba(255,255,255,0.1);">
+                <h2 style="margin-top: 0;">{icon} Hasil Analisis {icon}</h2>
+                <p style="margin-bottom: 0; opacity: 0.9;">Probabilitas Estimasi:</p>
+                <div class="prob-text">{probability:.1f}%</div>
+                <h3 style="margin-bottom: 0;">Status: {status_text}</h3>
             </div>
         """, unsafe_allow_html=True)
 
