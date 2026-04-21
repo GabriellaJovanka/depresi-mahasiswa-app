@@ -37,16 +37,17 @@ with st.form("main_form"):
         financial_stress = st.slider("Financial Stress (1-5)", 1, 5, 3)
         family_history = st.selectbox("Family History of Mental Illness", ["Yes", "No"])
 
-  # 1. CSS untuk menyembunyikan tombol asli & mempercantik tombol merah
-    st.markdown
-    ("""
+    st.markdown("---")
+
+    # 1. CSS untuk menyembunyikan tombol asli & mempercantik tombol merah
+    st.markdown("""
         <style>
             /* Menghilangkan tombol bawaan Streamlit secara total */
             div[data-testid="stForm"] button[kind="primaryFormSubmit"] {
                 display: none !important;
             }
             
-            //Gaya tombol merah kustom 
+            /* Gaya tombol merah kustom */
             .my-red-button {
                 display: block !important;
                 background-color: #FF4A4A;
@@ -69,10 +70,9 @@ with st.form("main_form"):
     """, unsafe_allow_html=True)
 
     # 2. Render Tombol Merah Kustom
-    # Tombol ini akan memicu klik pada tombol asli secara otomatis
     st.markdown('<button class="my-red-button" type="button" onclick="window.parent.document.querySelector(\'button[kind=primaryFormSubmit]\').click()">🔍 Prediksi Sekarang</button>', unsafe_allow_html=True)
 
-    # 3. Tombol asli (Wajib ada di dalam form agar 'submitted' bekerja, tapi disembunyikan oleh CSS)
+    # 3. Tombol asli (Wajib ada di dalam form agar 'submitted' bekerja)
     submitted = st.form_submit_button("Analisis Sekarang")
 
 # --- PROSES PREDIKSI ---
