@@ -42,6 +42,13 @@ st.markdown("""
             font-weight: bold;
         }
 
+        /* Efek saat tombol diarahkan kursor (hover) */
+        div[data-testid="stFormSubmitButton"] button:hover {
+            background-color: #f7e6d2 !important; /* Cream lebih terang saat hover */
+            color: #355872 !important;
+            border-color: #f7e6d2 !important;
+        }
+
     </style>
 """, unsafe_allow_html=True)
 
