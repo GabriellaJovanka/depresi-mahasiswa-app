@@ -38,8 +38,9 @@ st.markdown("""
         div[data-testid="stFormSubmitButton"] button {
             background-color: #EFD2B0 !important;
             color: #000000 !important; /* Warna teks biru gelap */
-            border: 5px solid #355872 !important;
+            border: 3px solid #355872 !important;
             font-weight: bold;
+            border-radius: 10px;
         }
 
         /* Efek saat tombol hover */
