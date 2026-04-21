@@ -42,7 +42,7 @@ with st.form("main_form"):
         financial_stress = st.slider("Financial Stress (1-5)", 1, 5, 3)
         family_history = st.selectbox("Family History of Mental Illness", ["Yes", "No"])
 
-    submitted = st.form_submit_button("Analisis Sekarang")
+    submitted = st.form_submit_button("Analisis Depresi", use_container_width=True)
 
 if submitted:
     try:
