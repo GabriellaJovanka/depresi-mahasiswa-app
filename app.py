@@ -149,10 +149,12 @@ if submitted:
         # Logika Tampilan Hasil
         if prediction == 1:
             bg_color = "#355872"
+            recom_bg = "#E67E22"
             status_text = "Berisiko Tinggi Depresi"
             icon = "⚠️"
         else:
             bg_color = "#27AE60"
+            recom_bg = "#219150"
             status_text = "Risiko Rendah / Tidak Berisiko"
             icon = "✅"
 
@@ -165,10 +167,16 @@ if submitted:
             </div>
         """, unsafe_allow_html=True)
 
-        if prediction == 1:
-            st.warning("**Rekomendasi:** Hasil ini menunjukkan indikasi tekanan psikologis yang kuat. Jangan ragu untuk berbicara dengan konselor, psikolog, atau orang terdekat yang Anda percayai.")
-        else:
-            st.success("**Rekomendasi:** Pertahankan kesehatan mental Anda. Tetap luangkan waktu untuk istirahat dan hobi di tengah kesibukan akademik.")
+        st.markdown(f"""
+            <div class="recom-card" style="background-color: {recom_bg};">
+                <strong>Rekomendasi:</strong><br>{recom_text}
+            </div>
+        """, unsafe_allow_html=True)
+
+        # if prediction == 1:
+        #     st.warning("**Rekomendasi:** Hasil ini menunjukkan indikasi tekanan psikologis yang kuat. Jangan ragu untuk berbicara dengan konselor, psikolog, atau orang terdekat yang Anda percayai.")
+        # else:
+        #     st.success("**Rekomendasi:** Pertahankan kesehatan mental Anda. Tetap luangkan waktu untuk istirahat dan hobi di tengah kesibukan akademik.")
 
     except Exception as e:
         st.error(f"❌ Terjadi kesalahan: {e}")
