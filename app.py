@@ -33,6 +33,13 @@ st.markdown("""
             padding: 20px;
             border-radius: 10px;
         }
+
+        div[data-testid="stForm"] label, 
+        div[data-testid="stForm"] p, 
+        div[data-testid="stForm"] span,
+        div[data-testid="stForm"] div {
+            color: black !important;
+        }
     </style>
 """, unsafe_allow_html=True)
 
