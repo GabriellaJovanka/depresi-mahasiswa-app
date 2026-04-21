@@ -37,8 +37,8 @@ st.markdown("""
         /* TARGET TOMBOL ANALISIS DEPRESI */
         div[data-testid="stFormSubmitButton"] button {
             background-color: #EFD2B0 !important;
-            color: #355872 !important; /* Warna teks biru gelap */
-            border: 2px solid #000000 !important;
+            color: #000000 !important; /* Warna teks biru gelap */
+            border: 2px solid #EFD2B0 !important;
             font-weight: bold;
         }
 
