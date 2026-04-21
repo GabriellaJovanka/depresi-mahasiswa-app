@@ -74,7 +74,7 @@ if submitted:
             data_df[col] = data_df[col].astype(str).str.strip()
 
         # Prediksi
-        prediction = model.predict(data_df)
+        prediction = model_pipeline.predict(data_df)
         
         st.divider()
         if prediction[0] == 1:
