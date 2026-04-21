@@ -19,7 +19,7 @@ st.markdown("""
     <style>
         /* Mengubah background utama aplikasi */
         .stApp {
-            background-color: #EFD2B0; /* Navy Blue Hex */
+            background-color: #EFD2B0; /* Cream Hex */
         }
 
         /* Opsional: Mengubah warna teks jadi putih agar terbaca di background gelap */
@@ -29,7 +29,7 @@ st.markdown("""
 
         /* Membuat kotak form tetap terlihat rapi dengan background agak transparan */
         div[data-testid="stForm"] {
-            background-color: #355872;
+            background-color: #355872; /* Blue Hex */
             padding: 20px;
             border-radius: 10px;
         }
@@ -38,7 +38,7 @@ st.markdown("""
         div[data-testid="stFormSubmitButton"] button {
             background-color: #EFD2B0 !important;
             color: #000000 !important; /* Warna teks biru gelap */
-            border: 2px solid #EFD2B0 !important;
+            border: 2px solid #355872 !important;
             font-weight: bold;
         }
 
