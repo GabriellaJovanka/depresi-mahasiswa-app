@@ -77,6 +77,11 @@ st.markdown("""
             font-weight: 900;
             margin: 10px 0;
         }
+
+        /* Mengubah warna teks di dalam kotak info, warning, dan success menjadi hitam */
+        div[data-testid="stNotification"] p {
+            color: black !important;
+        }
     </style>
 """, unsafe_allow_html=True)
 
