@@ -39,54 +39,56 @@ with st.form("main_form"):
 
     st.markdown("---")
 
-    # 1. CSS Kustom
-    custom_button_style = """
+    # 1. CSS untuk mempercantik tombol merah & benar-benar menyembunyikan tombol asli
+    st.markdown
+
+   ("""
         <style>
-            .custom-red-button {
-                background-color: #FF4A4A;
-                color: white !important;
-                border-radius: 20px;
-                border: none;
-                padding: 12px 24px;
-                font-size: 16px;
-                font-weight: bold;
-                width: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                transition: background-color 0.3s ease;
-            }
-            .custom-red-button:hover {
-                background-color: #E63939;
-            }
-            div.stButton > button:first-child[kind="primaryFormSubmit"] {
+            /* Sembunyikan tombol bawaan Streamlit secara total */
+            div[data-testid="stForm"] button[kind="primaryFormSubmit"] {
                 display: none !important;
             }
-        </style>
-    """
-    st.markdown(custom_button_style, unsafe_allow_html=True)
-
-    # 2. Render Tombol HTML
-    st.markdown('<button class="custom-red-button" id="custom-submit-btn">🔍 Prediksi Sekarang</button>', unsafe_allow_html=True)
-
-    # 3. Javascript (DIBETULKAN: Ditambah penutup tag script)
-    st.components.v1.html(
-        """
-        <script>
-            var customBtn = window.parent.document.getElementById('custom-submit-btn');
-            var realBtn = window.parent.document.querySelector('div.stButton > button[kind="primaryFormSubmit"]');
-            if (customBtn && realBtn) {
-                customBtn.onclick = function() {
-                    realBtn.click();
-                };
+            
+            /* Gaya tombol merah kustom */
+            .my-red-button {
+                background-color: #FF4A4A;
+                color: white;
+                border-radius: 25px;
+                border: none;
+                padding: 15px;
+                font-size: 18px;
+                font-weight: bold;
+                width: 100%;
+                cursor: pointer;
+                text-align: center;
+                margin-bottom: 10px;
             }
-        </script>
-        """,
-        height=0
-    )
+            .my-red-button:hover {
+                background-color: #E63939;
+            }
+        </style>
+    """, unsafe_allow_html=True)
 
-    # Tombol asli tetap harus ada di dalam form agar 'submitted' bekerja
+    # 2. Tombol Merah Kustom
+    st.markdown('<button class="my-red-button" onclick="clickRealButton()">🔍 Prediksi Sekarang</button>', unsafe_allow_html=True)
+
+    # 3. Javascript yang lebih kuat untuk 'menembak' tombol asli
+    st.components.v1.html("""
+        <script>
+            function clickRealButton() {
+                // Mencari tombol asli di dalam dokumen parent
+                var buttons = window.parent.document.querySelectorAll('button[kind="primaryFormSubmit"]');
+                // Klik tombol yang paling terakhir (milik form ini)
+                if (buttons.length > 0) {
+                    buttons[buttons.length - 1].click();
+                }
+            }
+            // Daftarkan fungsi ke window agar bisa dipanggil dari onclick HTML
+            window.clickRealButton = clickRealButton;
+        </script>
+    """, height=0)
+
+    # 4. Tombol asli (Inilah yang akan 'diklik' oleh tombol merah secara gaib)
     submitted = st.form_submit_button("Analisis Sekarang")
 
 # --- PROSES PREDIKSI (Di luar blok with st.form) ---
