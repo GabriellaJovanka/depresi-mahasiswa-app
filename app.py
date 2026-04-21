@@ -29,38 +29,11 @@ st.markdown("""
 
         /* Membuat kotak form tetap terlihat rapi dengan background agak transparan */
         div[data-testid="stForm"] {
-            background-color: #FFE8BE;
+            background-color: #355872;
             padding: 20px;
             border-radius: 10px;
         }
 
-/* 3. Memaksa Label Input (Gender, Age, dll) menjadi warna hitam pekat */
-        div[data-testid="stForm"] label {
-            color: black !important;
-            font-weight: bold !important;
-        }
-
-        /* ========================================================= */
-        /* 4. [PERBAIKAN SAKTI] Khusus untuk Teks di DALAM Dropdown/Input */
-        /* Mencari teks di dalam div yang memiliki atribut role="button" (untuk selectbox) */
-        div[role="button"] {
-            color: black !important;
-        }
-        
-        /* Memaksa teks yang sedang dipilih di dalam dropdown jadi hitam */
-        div[data-testid="stSelectbox"] div[data-baseweb="select"] div {
-            color: black !important;
-        }
-        
-        /* Memaksa teks input biasa (City, Profession) yang sedang diketik jadi hitam */
-        div[data-testid="stTextInput"] input {
-            color: black !important;
-        }
-
-        /* Memaksa teks input angka (Age) yang sedang diketik jadi hitam */
-        div[data-testid="stNumberInput"] input {
-            color: black !important;
-        }
     </style>
 """, unsafe_allow_html=True)
 
