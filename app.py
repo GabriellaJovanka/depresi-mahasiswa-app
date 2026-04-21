@@ -20,7 +20,7 @@ st.markdown("""
     <style>
         /* Background Utama */
         .stApp {
-            background-color: #EFD2B0; 
+            background-color: #F4F0E4; 
         }
 
         /* Warna Teks Judul Halaman */
@@ -149,16 +149,12 @@ if submitted:
         # Logika Tampilan Hasil
         if prediction == 1:
             bg_color = "#355872"
-            recom_bg = "#E67E22"
             status_text = "Berisiko Tinggi Depresi"
             icon = "⚠️"
-            recom_text = "Hasil ini menunjukkan indikasi tekanan psikologis yang kuat. Jangan ragu untuk berbicara dengan konselor, psikolog, atau orang terdekat yang Anda percayai."
         else:
             bg_color = "#27AE60"
-            recom_bg = "#219150"
             status_text = "Risiko Rendah / Tidak Berisiko"
             icon = "✅"
-            recom_text = "Pertahankan kesehatan mental Anda. Tetap luangkan waktu untuk istirahat dan hobi di tengah kesibukan akademik."
 
         st.markdown(f"""
             <div class="result-card" style="background-color: {bg_color}; border: 5px solid rgba(255,255,255, 0.1);">
@@ -169,16 +165,10 @@ if submitted:
             </div>
         """, unsafe_allow_html=True)
 
-        st.markdown(f"""
-            <div class="recom-card" style="background-color: {recom_bg};">
-                <strong>Rekomendasi:</strong><br>{recom_text}
-            </div>
-        """, unsafe_allow_html=True)
-
-        # if prediction == 1:
-        #     st.warning("**Rekomendasi:** Hasil ini menunjukkan indikasi tekanan psikologis yang kuat. Jangan ragu untuk berbicara dengan konselor, psikolog, atau orang terdekat yang Anda percayai.")
-        # else:
-        #     st.success("**Rekomendasi:** Pertahankan kesehatan mental Anda. Tetap luangkan waktu untuk istirahat dan hobi di tengah kesibukan akademik.")
+        if prediction == 1:
+            st.warning("**Rekomendasi:** Hasil ini menunjukkan indikasi tekanan psikologis yang kuat. Jangan ragu untuk berbicara dengan konselor, psikolog, atau orang terdekat yang Anda percayai.")
+        else:
+            st.success("**Rekomendasi:** Pertahankan kesehatan mental Anda. Tetap luangkan waktu untuk istirahat dan hobi di tengah kesibukan akademik.")
 
     except Exception as e:
         st.error(f"❌ Terjadi kesalahan: {e}")
