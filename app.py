@@ -29,7 +29,7 @@ st.markdown("""
 
         /* Warna Teks Judul Halaman */
         .stApp h1, .stApp h2 {
-            color: #355872 !important;
+            color: #FFFFFF !important;
         }
 
         /* Styling Form */
