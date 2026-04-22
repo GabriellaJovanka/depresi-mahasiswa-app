@@ -63,6 +63,7 @@ st.markdown("""
         div[data-testid="stFormSubmitButton"] button:hover {
             background-color: #f7e6d2 !important;
             border-color: #355872 !important;
+            color: #000000 !important;
             transform: scale(1.01);
         }
 
