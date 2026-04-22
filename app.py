@@ -1,3 +1,7 @@
+# --- Deteksi Tingkat Depresi pada Mahasiswa Menggunakan Machine Learning ---
+
+# --- Gabriella Jovanka Bustan (A11.2023.14861) ---
+
 import streamlit as st
 import pandas as pd
 import joblib
@@ -116,7 +120,7 @@ with st.form("main_form"):
 
     st.markdown("---")
 
-    # Tombol asli tetap harus ada di dalam form
+    # Tombol 
     submitted = st.form_submit_button("Analisis Sekarang", use_container_width=True)
 
 # --- PROSES PREDIKSI ---
@@ -135,7 +139,7 @@ if submitted:
         
         data_df = pd.DataFrame([input_dict])
         
-        # Pre-processing ringan
+        # Pre-processing 
         for col in data_df.select_dtypes(include=['object']).columns:
             data_df[col] = data_df[col].astype(str).str.strip()
 
@@ -146,7 +150,7 @@ if submitted:
         
         st.divider()
 
-        # Logika Tampilan Hasil
+        # Logika tampilan output
         if prediction == 1:
             bg_color = "#355872"
             status_text = "Berisiko Tinggi Depresi"
