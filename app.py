@@ -50,7 +50,7 @@ st.markdown("""
 
         /* TOMBOL ANALISIS */
         div[data-testid="stFormSubmitButton"] button {
-            background-color: #355872 !important;
+            background-color: #000000 !important;
             border: 2px solid #FFFFFF !important;
             font-weight: bold;
             font-size: 18px;
